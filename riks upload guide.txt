@@ -1,0 +1,16 @@
+Rik:
+
+github:
+
+verplaats de mappen gewoon in een mappen systeem --> windows verkenner
+
+code:
+git add -A
+
+commit:
+git commit -m "message"
+
+push:
+git push https://github.com/ enzovoorts
+
+
