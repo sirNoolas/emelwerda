@@ -15,8 +15,18 @@ public class GravUp extends Item{
 	
 	@Override
 	public void performAction(Ball b, StartHere sh) {
-		if(b.getGravity() > 2) {
-			b.setGravity(b.getGravity() -2);
+		boolean inTime = true;
+		int x = sh.getScore();
+		
+		while(inTime) {
+			int y = sh.getScore();
+			
+			if(x + 400 < y) {
+				inTime = false;
+			}
+			if(b.getGravity() > 2) {
+			 b.setGravity(b.getGravity() -1);
+			}
 		}
 	}
 	

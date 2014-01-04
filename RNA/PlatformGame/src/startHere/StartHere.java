@@ -8,17 +8,25 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.net.URL;
+import java.util.Random;
 
 
-@SuppressWarnings("serial")
-public class StartHere extends Applet implements Runnable, KeyListener{
-        Image i, city;
+
+public class StartHere extends Applet implements Runnable, KeyListener, MouseMotionListener, MouseListener{
+
+		Image i, city;
         Graphics grap;
         URL url;
         
+        Random r = new Random();
+        
         Font font = new Font("Calibri", Font.BOLD, 30);
         Font font2 = new Font("Calibri", Font.BOLD, 72);
+        Font font3 = new Font("Calibri", Font.BOLD, 36);
         
         int width = 800;
         int height = 600;
@@ -30,24 +38,28 @@ public class StartHere extends Applet implements Runnable, KeyListener{
         Platform p[] = new Platform[8];
         Item item[] = new Item[3];
         
+        boolean gameOver = false;
+        boolean mouseIn = false;
+        
         @Override
         public void init() {
                 setSize(width, height);
                 addKeyListener(this);
-
-                
+                addMouseListener(this);
+                addMouseMotionListener(this);
                 try{
                         url = getDocumentBase();
                 }catch(Exception e) {
                 }
                 
                 city = getImage(url, "images/city3.png");
+                new Resources(this);
         }
         
         @Override
         public void start() {
                 for(int i = 0; i < p.length; i++) {
-                        p[i] = new Platform((200*i) +200, Platform.yRandomHeight(this));
+                        p[i] = new Platform(120*i + 300, 450);
                 }
                 for(int i = 0; i < item.length; i++) {
                     item[i] = new ScoreBoost(getWidth() + 2000 * i);
@@ -61,7 +73,11 @@ public class StartHere extends Applet implements Runnable, KeyListener{
 
 		public void run() {
                 while(true) {
-                		score++;
+                	gameOver = b1.isGameOver();
+                	
+                		if(gameOver == false) {
+                			score++;
+                		}
                 		b1.update(this);
                 		
                         for(int i = 0; i < item.length; i++) {
@@ -71,10 +87,19 @@ public class StartHere extends Applet implements Runnable, KeyListener{
                             p[i].update(this, b1);
                         }
                         for(int i = 0; i < item.length; i++) {
-                        	if(item[i].getY() == 10000) {
+                        	if(item[i].isCreateNew()) {
                         		item[i] = null;
-                        		item[i] = new ScoreBoost(getWidth() + 6000);
-                        		System.out.println(item[i].getY());
+                        		switch(r.nextInt(2)) {
+                        		case 0: 
+                        			item[i] = new ScoreBoost(getWidth() + 10 * r.nextInt(500));
+                        			//System.out.println("Case 0");
+                        			break;
+                        		case 1:
+                        			item[i] = new GravUp(getWidth() + 10 * r.nextInt(500));
+                        			//System.out.println("Case 1");
+                        			break;
+                        		}
+                        		item[i].setCreateNew(false);
                         	}
                         }
                         
@@ -153,6 +178,26 @@ public class StartHere extends Applet implements Runnable, KeyListener{
                 	levelcount += 100;
                 	level++;
                 }
+				
+				if(gameOver == true) {
+                	g.setFont(font2);
+                	g.setColor(Color.BLACK);
+                	g.drawString("GAME OVER", 202, 302);
+                	g.setColor(Color.WHITE);
+                	g.drawString("GAME OVER", 200, 300);
+                	if(mouseIn) {
+                		g.setFont(font3);
+                		g.setColor(Color.RED);
+                		g.drawString("Play again?", 300, 350);
+                	}else{
+                		g.setFont(font3);
+                		g.setColor(Color.BLACK);
+                		g.drawString("Play again?", 302, 352);
+                		g.setColor(Color.WHITE);
+                		g.drawString("Play again?", 300, 350);
+                	}
+
+				}
                
                 
                 
@@ -164,15 +209,15 @@ public class StartHere extends Applet implements Runnable, KeyListener{
                 switch(e.getKeyCode()) {
                         case KeyEvent.VK_LEFT:
                                 b1.moveLeft();
-                                System.out.println("Left is pressed");
+                                //System.out.println("Left is pressed");
                                 break;
                         case KeyEvent.VK_RIGHT:
                                 b1.moveRight();
-                                System.out.println("Right is pressed");
+                                //System.out.println("Right is pressed");
                                 break;
                         case KeyEvent.VK_DOWN:
                                 b1.slowDown();
-                                System.out.println("Down is pressed");
+                                //System.out.println("Down is pressed");
                                 break;
                 }
                 
@@ -193,5 +238,66 @@ public class StartHere extends Applet implements Runnable, KeyListener{
 
 		public void setScore(int score) {
 			this.score = score;
+		}
+
+		@Override
+		public void mouseDragged(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent e) {
+			if(gameOver) {
+			if(e.getX() > 300 && e.getX() < 500 && e.getY() > 310 && e.getY() < 360) {
+				mouseIn = true;
+			}else{
+				mouseIn = false;
+			}
+			}
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			if(mouseIn) {
+				score =0;
+				b1 = new Ball();
+			for(int i = 0; i < p.length; i++) {
+                 p[i] = new Platform(120*i + 300, 450);
+             }
+             for(int i = 0; i < item.length; i++) {
+                 item[i] = new ScoreBoost(getWidth() + 2000 * i);
+             }
+            mouseIn = false;
+ 			gameOver= false;
+ 			b1.setGameOver(false);
+ 			Ball.bouncecount = 0;
+			}
+			
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
 		}
 }

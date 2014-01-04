@@ -3,16 +3,16 @@ package startHere;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.ImageObserver;
 import java.util.Random;
 
 public class Platform {
         private static int dx;
         private int x, y;
         
-        private static int height = 40;
         private int width = 125;
-
-        
+        Image platform;
         
                         
         private Random r = new Random();
@@ -26,6 +26,7 @@ public class Platform {
                 x = i;
                 y = j;
                 dx = -2;
+                platform = Resources.platform;
         }
         
         public void update(StartHere sh, Ball b) {
@@ -53,7 +54,7 @@ public class Platform {
                                 b.setY(y- radius);
                                 b.setDy(newDy);
                                 Ball.bouncecount++;
-                                System.out.println(Ball.bouncecount+ "th bounce");
+                                //System.out.println(Ball.bouncecount+ "th bounce");
                                 }
                         }        
                 }
@@ -62,7 +63,7 @@ public class Platform {
         
         public void paint(Graphics g) {
                 g.setColor(Color.CYAN);
-                g.fillRect(x, y, width, height);
+                g.drawImage(platform, x, y, Resources.sh);
 
         }
         

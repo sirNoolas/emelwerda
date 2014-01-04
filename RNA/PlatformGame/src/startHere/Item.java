@@ -6,10 +6,18 @@ import java.util.Random;
 
 public class Item {
 	private int x, y, dx, radius;
-	
+	private boolean CreateNew = false;
 
 	
-    public Item(int i) {
+    public boolean isCreateNew() {
+		return CreateNew;
+	}
+
+	public void setCreateNew(boolean createNew) {
+		CreateNew = createNew;
+	}
+
+	public Item(int i) {
         x = i;
         Random r = new Random();
         y = r.nextInt(300) + 135;
@@ -21,8 +29,7 @@ public class Item {
     	x+= dx;
         checkCollision(b, sh);
         if(x < 0 - radius) {
-                Random r = new Random();
-                x = sh.getWidth() + 2000 + r.nextInt(300);
+                CreateNew = true;
         }
 }
         
@@ -39,7 +46,7 @@ public class Item {
         
         if((a*a + b*b) <= (c*c)) {
         	performAction(ball, sh);
-        	y = 10000;
+        	CreateNew = true;
         }
 }
         

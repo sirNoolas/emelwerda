@@ -3,24 +3,26 @@ package startHere;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.net.URL;
+import java.awt.Font;
 
 public class Ball {
         private double x = 375, y = 20;
         private double dx= 0, dy=0, dt =0.2;
         private int radius = 20;
         private int gravity = 5;
-        private double energyloss = 0.7;
         private double gameDy = -20;
         private String color = "CYAN";
         public static int bouncecount = 0;
+        private static boolean gameOver = false;
+        Image ball;
+        URL url;
         
-        // look for what is passed in
-        public Ball(int i, int j) {
-                x = i;
-                y = j;
+        // look for what is passed in        
+        public Ball() {
+        	ball = Resources.ball;
         }
-        
-        public Ball() {}
         
 
         public void update(StartHere sh) {
@@ -36,12 +38,9 @@ public class Ball {
                         }
                 }
         
-                if(y + dy >= sh.getHeight() - radius) {
-                        dy *= energyloss;
-                        dx *= energyloss;
-                        dy = gameDy + -dy * 0.1;
-                        bouncecount++;
-                        System.out.println(bouncecount+ "th bounce");
+                if(y- 200 >= sh.getHeight()) {
+                        gameOver = true;
+                        
                 }else{
                         dy += gravity*dt; // v = at
                         y += dy + 0.5 * gravity *dt*dt -1; // s = 0.5a *t2
@@ -53,6 +52,7 @@ public class Ball {
 		public void paint(Graphics g) {
                 g.setColor(Color.getColor(color));
                 g.fillOval((int)x - radius, (int)y - radius, radius*2, radius*2);
+                g.drawImage(ball, (int)x - radius, (int)y - radius, Resources.sh);
         }
         
         // KEYBOARD INTERACTION
@@ -105,6 +105,12 @@ public class Ball {
 		}
 		public void setGravity(int gravity) {
 			this.gravity = gravity;
+		}
+		public boolean isGameOver() {
+			return gameOver;
+		}
+		public void setGameOver(boolean gameOver) {
+			this.gameOver = gameOver;
 		}
         
         
