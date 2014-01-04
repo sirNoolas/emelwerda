@@ -20,6 +20,8 @@ Version  1.0:
 -	Items are better now, added Gravity item and easy way to add more
 -	Added possibility to die
 -	Added play again button
+- 	New & better platforms
+
 To do: 
 -	Add more items
 -	If possible: highscore list
