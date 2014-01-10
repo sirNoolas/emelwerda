@@ -4,20 +4,22 @@ public class MainClass {
 
 	public static void main(String[] args) {
 		int largestPalindrome = 0;
-		int a = 100;
-		int b = 100;
+		int a = 999;
+		int b = 999;
 		int n = 0;
 
-		while(a <= 999){
-			b = 100;
-			while(b <= 999){
+		while(a >= 100){
+			b = 999;
+			while(b >= a){
 				n = a*b;
-				if(reverse(n) == n && n > largestPalindrome){
+				if(n <= largestPalindrome){
+					break;
+				}else if(reverse(n) == n){
 					largestPalindrome = n;
 				}
-				b++;
+				b--;
 			}
-			a++;
+			a--;
 		}
 		System.out.println(largestPalindrome);
 
@@ -33,3 +35,4 @@ public class MainClass {
 	}
 
 }
+
