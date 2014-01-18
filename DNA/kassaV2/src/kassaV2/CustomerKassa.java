@@ -13,6 +13,8 @@ import javax.swing.event.ChangeListener;
 
 import java.io.*;
 
+import java.util.Date;
+
 
 public class CustomerKassa extends JFrame{
 	// initialise variables for the window and calculations
@@ -22,9 +24,9 @@ public class CustomerKassa extends JFrame{
 	JCheckBox adultMJKOn2;
 	JRadioButton adultMJKOn1, adultSponsor, regAdult; // PAY ATENTION!!! SPONSOR == DONATOR...
 
-	static double adults;
-	static double children;
-	static double amountOfMJK;
+	static int adults;
+	static int children;
+	static int amountOfMJK;
 	static double totalCalc;
 	double ADULTPRICE = 4.00; // Price in euro's
 	double CHILDPRICE = 2.00; // Price in euro's
@@ -170,18 +172,21 @@ public class CustomerKassa extends JFrame{
 				if(adultMJKOn1.isSelected() && adultMJKOn2.isSelected()){ 
 					amountOfMJK = howManyMJK.getValue();
 					totalCalc = getPrice(true);
-					writeStart();
 				}else if(adultSponsor.isSelected()){ 
 					ADULTPRICE = 0;	CHILDPRICE = 0;
 					totalCalc = 0;
-					writeStart();
 				}else{
 					totalCalc = getPrice(false);
-					writeStart();
 				}
-
-				JOptionPane.showMessageDialog(CustomerKassa.this, "De klant moet €" + totalCalc + " betalen.");
-				System.exit(0);
+				
+				if(totalCalc >= 0 && adults > 0 && adults >= amountOfMJK){
+					writeStart();
+					JOptionPane.showMessageDialog(CustomerKassa.this, "De klant moet €" + totalCalc + " betalen.");
+					System.exit(0);
+				}else{
+					JOptionPane.showMessageDialog(CustomerKassa.this, "ERROR: Foutieve invoer");
+				}
+				
 			}else if(e.getSource() == cancelButton){
 				System.exit(0);
 			}			
@@ -221,7 +226,7 @@ public class CustomerKassa extends JFrame{
 	
 	
 	public void writeStart(){
-		Customer customerInfo = new Customer(totalCalc, adults, children, amountOfMJK);	
+		Customer customerInfo = getCustomer();	
 		
 		PrintWriter custOutput = createFile("C:/Users/David/Desktop/CHCSystems", "C:/Users/David/Desktop/CHCSystems/customerHistory.txt");
 		
@@ -231,9 +236,10 @@ public class CustomerKassa extends JFrame{
 	
 	private static class Customer{
 		
-		public double entryPrice, amountOfAdults, amountOfChildren, amountOfMJK;
+		public double entryPrice;
+		public int amountOfAdults, amountOfChildren, amountOfMJK;
 		
-		public Customer(double entryPrice, double amountOfAdults, double amountOfChildren, double amountOfMJK){
+		public Customer(double entryPrice, int amountOfAdults, int amountOfChildren, int amountOfMJK){
 			this.entryPrice = entryPrice;
 			this.amountOfAdults = amountOfAdults;
 			this.amountOfChildren = amountOfChildren;
@@ -243,17 +249,27 @@ public class CustomerKassa extends JFrame{
 		
 	} // end of Customer
 	
+	private static Customer getCustomer(){
+		
+		Customer customerInfo = new Customer(totalCalc, adults, children, amountOfMJK);
+		
+		return customerInfo;
+		
+	}
+	
 	private static PrintWriter createFile(String dirName, String fileName){
 		
+		/*File customerHistoryDir = new File(dirName);
+		customerHistoryDir.mkdir();
+		
+		File customerHistory = new File(fileName);
+		*/
 		try{
-			File customerHistoryDir = new File(dirName);
-			customerHistoryDir.mkdir();
-			
-			File customerHistory = new File(fileName);
-			
+
 			PrintWriter infoToWrite = new PrintWriter(
 					new BufferedWriter(
-							new FileWriter(fileName)));
+							new FileWriter(fileName, true)));
+			return infoToWrite;
 			
 		}catch(IOException e){
 			System.out.println("An I/O Error Ocurred");
@@ -262,14 +278,17 @@ public class CustomerKassa extends JFrame{
 		} // end of try/catch
 		
 		return null;
-		
+				
 	} // end of PrintWriter
 	
 	private static void createCustomer(Customer customerInfo, PrintWriter custOutput){
 		
-		String stringCustomerInfo = Double.toString(customerInfo.entryPrice);
+		String stringCustomerInfo = Double.toString(customerInfo.entryPrice) + " " + Integer.toString(customerInfo.amountOfAdults) + " " + Integer.toString(customerInfo.amountOfChildren) + " " +  Integer.toString(customerInfo.amountOfMJK);
 		
-		custOutput.println(stringCustomerInfo);
+		Date date = new Date();
+		
+		custOutput.println(date + " - " + stringCustomerInfo);
+		custOutput.close();
 		
 	}
 
