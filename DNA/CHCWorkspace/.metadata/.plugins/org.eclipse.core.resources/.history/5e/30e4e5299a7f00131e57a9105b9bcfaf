@@ -1,0 +1,215 @@
+package kassaV2;
+
+import javax.swing.*;
+import java.awt.event.*;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+public class MainKassa extends JFrame{
+
+	// initialise variables
+	JButton sendButton, cancelButton;
+	JLabel label1, label2, label3, label4;
+	JSlider howManyChildren, howManyAdults, howManySponsors;
+	JCheckBox adultMJKOn2;
+	JRadioButton adultMJKOn1, adultSponsor, regAdult; // PAY ATENTION!!! SPONSOR == DONATOR...
+
+	double adults, children, amountOfSponsors, totalCalc;
+	double ADULTPRICE = 4.0; // Price in euro's
+	double CHILDPRICE = 2.0; // Price in euro's
+
+	public static void main(String[] args) {
+
+		new MainKassa();
+
+	} // end of main
+
+	public MainKassa(){
+		int maxSliderSize = 10;
+		
+		this.setSize(500, 300);
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setTitle("CHC Klanten Registratie");
+
+		JPanel thePanel = new JPanel();
+
+		
+		// initialising the number of customers fields
+		// panel1
+		JPanel panel1 = new JPanel();
+
+		label1 = new JLabel("Aantal volwassenen:  ");
+		panel1.add(label1);
+
+		// initialising slider
+		howManyAdults = new JSlider(0, maxSliderSize, 0);
+		howManyAdults.setMinorTickSpacing(1);
+		howManyAdults.setMajorTickSpacing(5);
+		howManyAdults.setPaintTicks(true);
+		howManyAdults.setPaintLabels(true);
+
+		ListenForSlider lForSliderAdults = new ListenForSlider();
+		howManyAdults.addChangeListener(lForSliderAdults);
+
+		panel1.add(howManyAdults);
+
+		thePanel.add(panel1);
+
+		// radiobuttons for sponsor, MJK, etc.
+		JPanel panel4 = new JPanel();
+		
+		label4 = new JLabel("Specificaties:");
+		panel4.add(label4);
+		
+		adultMJKOn1 = new JRadioButton("MJK");
+		adultSponsor = new JRadioButton("sponsor");
+		regAdult = new JRadioButton("normaal");
+
+		ButtonGroup adultSpec = new ButtonGroup();
+
+		adultSpec.add(adultMJKOn1);
+		adultSpec.add(adultSponsor);
+		adultSpec.add(regAdult);
+
+		panel4.add(adultMJKOn1);
+		panel4.add(adultSponsor);
+		panel4.add(regAdult);
+
+		regAdult.setSelected(true);
+		
+		thePanel.add(panel4);
+
+		
+		// panel2
+		JPanel panel2 = new JPanel();
+
+		label2 = new JLabel("Aantal kinderen:  ");
+		panel2.add(label2);
+		
+		// initialising slider
+		howManyChildren = new JSlider(0, maxSliderSize, 0);
+		howManyChildren.setMinorTickSpacing(1);
+		howManyChildren.setMajorTickSpacing(5);
+		howManyChildren.setPaintTicks(true);
+		howManyChildren.setPaintLabels(true);
+
+		ListenForSlider lForSliderChildren = new ListenForSlider();
+		howManyChildren.addChangeListener(lForSliderChildren);
+
+		panel2.add(howManyChildren);
+
+		thePanel.add(panel2);
+		
+		
+		// initialise panel3
+		// initialise amount of sponsors
+		JPanel panel3 = new JPanel();
+		
+		label3 = new JLabel("Hoeveelheid donateurs:  ");
+		panel3.add(label3);
+		
+		// initialise checkbox
+		adultMJKOn2 = new JCheckBox("donateurs");
+		panel3.add(adultMJKOn2);
+		
+		// initialising slider
+		howManySponsors = new JSlider(0, maxSliderSize, 0);
+		howManySponsors.setMinorTickSpacing(1);
+		howManySponsors.setMajorTickSpacing(5);
+		howManySponsors.setPaintTicks(true);
+		howManySponsors.setPaintLabels(true);
+		
+		ListenForSlider lForSliderSponsors = new ListenForSlider();
+		howManySponsors.addChangeListener(lForSliderSponsors);
+		
+		panel3.add(howManySponsors);
+		
+		thePanel.add(panel3);
+		
+		// Initialise Button
+		sendButton = new JButton("Opslaan");
+		ListenForButton lForButton1 = new ListenForButton();
+		sendButton.addActionListener(lForButton1);
+		
+		thePanel.add(sendButton);
+
+		// Initialise Button
+		cancelButton = new JButton("Anuleren");
+		ListenForButton lForButton2 = new ListenForButton();
+		cancelButton.addActionListener(lForButton2);
+
+		thePanel.add(cancelButton);
+		
+		//make everything visible
+		this.add(thePanel);
+		this.setVisible(true);
+	} // end of MainKassa
+
+	private class ListenForButton implements ActionListener{
+
+		public void actionPerformed(ActionEvent e){
+
+			if(e.getSource() == sendButton){
+				adults = howManyAdults.getValue();
+				children = howManyChildren.getValue();
+
+				if(adultMJKOn1.isSelected() && adultMJKOn2.isSelected()){ 
+					amountOfSponsors = howManySponsors.getValue();
+					totalCalc = getPrice(true, amountOfSponsors, children, adults);
+				}else if(adultSponsor.isSelected()){ 
+					ADULTPRICE = 0;	CHILDPRICE = 0;
+					totalCalc = 0;
+				}else{
+					totalCalc = getPrice(false, amountOfSponsors, children, adults);
+				}
+				
+				JOptionPane.showMessageDialog(MainKassa.this, totalCalc);
+				System.exit(0);
+			}else if(e.getSource() == cancelButton){
+				System.exit(0);
+			}
+			
+		} // end of actionPerformed
+
+	} // end of ListenForButton
+	
+	private class ListenForSlider implements ChangeListener{
+		
+		public void stateChanged(ChangeEvent e){
+			
+			if(e.getSource() == howManyAdults){
+				label1.setText("Aantal volwassenen: " + howManyAdults.getValue());				
+			}else if(e.getSource() == howManyChildren){
+				label2.setText("Aantal kinderen: " + howManyChildren.getValue());	
+			}else if(e.getSource() == howManySponsors){
+				label3.setText("Hoeveelheid donateurs: " + howManySponsors.getValue());	
+			}
+			
+		} // end of actionPerformed
+		
+	} // end of ListenForSlider
+	
+	public static double getPrice(boolean isSponsor, double amountOfSponsors, double amountOfAdults, double amountOfChildren){
+		double num = 0;
+		if(isSponsor){
+			//num = (amountOfSponsors *   
+		}
+		
+		
+		return num;
+	}
+
+} // end of MainKassa
+
+
+
+
+
+
+
+
+
+
+
