@@ -12,22 +12,24 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import java.io.*;
-
 import java.util.Date;
 
 
+@SuppressWarnings("serial")
 public class CustomerKassa extends JFrame{
 	// initialise variables for the window and calculations
 	JButton sendButton, cancelButton;
-	JLabel label1, label2, label3, label4, copyrightNotice;
+	JLabel label1, label2, label3, label4;
 	JSlider howManyChildren, howManyAdults, howManyMJK;
-	JCheckBox adultMJKOn2;
-	JRadioButton adultMJKOn1, adultSponsor, regAdult; // PAY ATENTION!!! SPONSOR == DONATOR...
+	JCheckBox adultMJKOn1;
+	JRadioButton adultSponsor, regAdult; // PAY ATENTION!!! SPONSOR == DONATOR...
+	JTextField getPostalCode;
 
 	static int adults;
 	static int children;
 	static int amountOfMJK;
 	static double totalCalc;
+	static String postalCode;
 	double ADULTPRICE = 4.00; // Price in euro's
 	double CHILDPRICE = 2.00; // Price in euro's
 	double MJKPRICE = 3.00; // price in euro's
@@ -41,7 +43,7 @@ public class CustomerKassa extends JFrame{
 	public CustomerKassa(){
 		int maxSliderSize = 10;
 		
-		this.setSize(375, 280);
+		this.setSize(275, 375);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,6 +59,8 @@ public class CustomerKassa extends JFrame{
 		label1 = new JLabel("Aantal volwassenen: 0");
 		panel1.add(label1);
 
+		thePanel.add(panel1);
+		
 		// initialising slider
 		howManyAdults = new JSlider(0, maxSliderSize, 0);
 		howManyAdults.setMinorTickSpacing(1);
@@ -67,9 +71,7 @@ public class CustomerKassa extends JFrame{
 		ListenForSlider lForSliderAdults = new ListenForSlider();
 		howManyAdults.addChangeListener(lForSliderAdults);
 
-		panel1.add(howManyAdults);
-
-		thePanel.add(panel1);
+		thePanel.add(howManyAdults);
 
 		// radiobuttons for sponsor, MJK, etc.
 		JPanel panel4 = new JPanel();
@@ -77,18 +79,15 @@ public class CustomerKassa extends JFrame{
 		label4 = new JLabel("Specificaties:");
 		panel4.add(label4);
 		
-		adultMJKOn1 = new JRadioButton("MJK");
 		adultSponsor = new JRadioButton("sponsor");
 		regAdult = new JRadioButton("normaal");
 
 		ButtonGroup adultSpec = new ButtonGroup();
 
-		adultSpec.add(adultMJKOn1);
 		adultSpec.add(adultSponsor);
 		adultSpec.add(regAdult);
 
 		panel4.add(regAdult);
-		panel4.add(adultMJKOn1);
 		panel4.add(adultSponsor);
 
 		regAdult.setSelected(true);
@@ -102,6 +101,8 @@ public class CustomerKassa extends JFrame{
 		label2 = new JLabel("Aantal kinderen: 0");
 		panel2.add(label2);
 		
+		thePanel.add(panel2);
+		
 		// initialising slider
 		howManyChildren = new JSlider(0, maxSliderSize, 0);
 		howManyChildren.setMinorTickSpacing(1);
@@ -112,21 +113,25 @@ public class CustomerKassa extends JFrame{
 		ListenForSlider lForSliderChildren = new ListenForSlider();
 		howManyChildren.addChangeListener(lForSliderChildren);
 
-		panel2.add(howManyChildren);
-
-		thePanel.add(panel2);
+		thePanel.add(howManyChildren);
 		
+		// TODO: add a textfield which displays the value of the slider if it changes
+		// TODO: make sure the slider does also display the value of the textfield if it changes
+	
 		
 		// initialise panel3
 		// initialise amount of MJK
 		JPanel panel3 = new JPanel();
 		
-		label3 = new JLabel("aantal MJK's: 0");
-		panel3.add(label3);
 		
 		// initialise checkbox
-		adultMJKOn2 = new JCheckBox("MJK");
-		panel3.add(adultMJKOn2);
+		adultMJKOn1 = new JCheckBox("Museumjaarkaart");
+		panel3.add(adultMJKOn1);
+		
+		label3 = new JLabel("Aantal: 0");
+		panel3.add(label3);
+		
+		thePanel.add(panel3);
 		
 		// initialising slider
 		howManyMJK = new JSlider(0, maxSliderSize, 0);
@@ -138,9 +143,14 @@ public class CustomerKassa extends JFrame{
 		ListenForSlider lForSliderSponsors = new ListenForSlider();
 		howManyMJK.addChangeListener(lForSliderSponsors);
 		
-		panel3.add(howManyMJK);
+		thePanel.add(howManyMJK);
+		// TODO: add a textfield which displays the value of the slider if it changes
+		// TODO: make sure the slider does also display the value of the textfield if it changes
 		
-		thePanel.add(panel3);
+		
+		// initialise textField
+		getPostalCode = new JTextField("postcode", 17);
+		thePanel.add(getPostalCode);
 		
 		// Initialise Button
 		sendButton = new JButton("Opslaan");
@@ -168,29 +178,43 @@ public class CustomerKassa extends JFrame{
 			if(e.getSource() == sendButton){
 				adults = howManyAdults.getValue();
 				children = howManyChildren.getValue();
+				postalCode = getPostalCode.getText();
 			
-				if(adultMJKOn1.isSelected() && adultMJKOn2.isSelected()){ 
-					amountOfMJK = howManyMJK.getValue();
-					totalCalc = getPrice(true);
-				}else if(adultSponsor.isSelected()){ 
+				if(adultSponsor.isSelected()){
 					ADULTPRICE = 0;	CHILDPRICE = 0;
 					totalCalc = 0;
+					
 				}else{
-					totalCalc = getPrice(false);
+					if(adultMJKOn1.isSelected()){ 
+						amountOfMJK = howManyMJK.getValue();
+						totalCalc = getPrice(true);
+						
+					}else{
+						totalCalc = getPrice(false);
+					}
+					
 				}
-				
-				if(totalCalc >= 0 && adults > 0 && adults >= amountOfMJK){
+				if(isValidMove()){
 					writeStart();
 					JOptionPane.showMessageDialog(CustomerKassa.this, "De klant moet €" + totalCalc + " betalen.");
 					System.exit(0);
-				}else{
-					JOptionPane.showMessageDialog(CustomerKassa.this, "ERROR: Foutieve invoer");
 				}
 				
 			}else if(e.getSource() == cancelButton){
 				System.exit(0);
 			}			
 		} // end of actionPerformed
+		
+		private boolean isValidMove(){
+			if(totalCalc >= 0 && adults > 0 && adults >= amountOfMJK && !postalCode.equals("postcode")){
+				return true;
+			}else{
+				JOptionPane.showMessageDialog(CustomerKassa.this, "ERROR: Foutieve invoer");
+				return false;
+			}
+			
+			
+		}
 
 	} // end of ListenForButton
 	
@@ -203,7 +227,7 @@ public class CustomerKassa extends JFrame{
 			}else if(e.getSource() == howManyChildren){
 				label2.setText("Aantal kinderen: " + howManyChildren.getValue());	
 			}else if(e.getSource() == howManyMJK){
-				label3.setText("Aantal MJK's: " + howManyMJK.getValue());	
+				label3.setText("Aantal: " + howManyMJK.getValue());	
 			}
 			
 		} // end of actionPerformed
@@ -211,35 +235,36 @@ public class CustomerKassa extends JFrame{
 	} // end of ListenForSlider
 	
 	public double getPrice(boolean hasMJK){
-		double num = 0;
-		
+
 		if(hasMJK){
-			num = (amountOfMJK * MJKPRICE) + ((adults - amountOfMJK) * ADULTPRICE) + (children * CHILDPRICE);
+			return ((amountOfMJK * MJKPRICE) + ((adults - amountOfMJK) * ADULTPRICE) + (children * CHILDPRICE));
 		}else{
-			num = adults * ADULTPRICE + children * CHILDPRICE;
+			return (adults * ADULTPRICE + children * CHILDPRICE);
 		}
-		
-		return num;
 		
 	} // end of getPrice
 	
-	
-	
+	// writing to the file
 	public void writeStart(){
 		Customer customerInfo = getCustomer();	
 		
-		PrintWriter custOutput = createFile("C:/Users/David/Desktop/CHCSystems", "C:/Users/David/Desktop/CHCSystems/customerHistory.txt");
-		
+		PrintWriter custOutput = createFile("C:/Users/David/Desktop/CHCSystems", "C:/Users/David/Desktop/CHCSystems/customerHistory.CHCFile");
+		//
+		// TODO: make sure the file CHCSystems gets created in the installer/startup program
+		// TODO: change the file path to the direct C drive
+		//
 		createCustomer(customerInfo, custOutput);
 	
 	} // end of writeStart
 	
 	private static class Customer{
 		
+		public String postalCode;
 		public double entryPrice;
 		public int amountOfAdults, amountOfChildren, amountOfMJK;
 		
-		public Customer(double entryPrice, int amountOfAdults, int amountOfChildren, int amountOfMJK){
+		public Customer(String postalCode, double entryPrice, int amountOfAdults, int amountOfChildren, int amountOfMJK){
+			this.postalCode = postalCode;
 			this.entryPrice = entryPrice;
 			this.amountOfAdults = amountOfAdults;
 			this.amountOfChildren = amountOfChildren;
@@ -251,7 +276,7 @@ public class CustomerKassa extends JFrame{
 	
 	private static Customer getCustomer(){
 		
-		Customer customerInfo = new Customer(totalCalc, adults, children, amountOfMJK);
+		Customer customerInfo = new Customer(postalCode, totalCalc, adults, children, amountOfMJK);
 		
 		return customerInfo;
 		
@@ -259,16 +284,16 @@ public class CustomerKassa extends JFrame{
 	
 	private static PrintWriter createFile(String dirName, String fileName){
 		
-		/*File customerHistoryDir = new File(dirName);
+		File customerHistoryDir = new File(dirName);
 		customerHistoryDir.mkdir();
 		
 		File customerHistory = new File(fileName);
-		*/
+		
 		try{
 
 			PrintWriter infoToWrite = new PrintWriter(
 					new BufferedWriter(
-							new FileWriter(fileName, true)));
+							new FileWriter(customerHistory, true)));
 			return infoToWrite;
 			
 		}catch(IOException e){
@@ -283,7 +308,7 @@ public class CustomerKassa extends JFrame{
 	
 	private static void createCustomer(Customer customerInfo, PrintWriter custOutput){
 		
-		String stringCustomerInfo = Double.toString(customerInfo.entryPrice) + " " + Integer.toString(customerInfo.amountOfAdults) + " " + Integer.toString(customerInfo.amountOfChildren) + " " +  Integer.toString(customerInfo.amountOfMJK);
+		String stringCustomerInfo = Integer.toString(customerInfo.amountOfAdults) + " " + Integer.toString(customerInfo.amountOfChildren) + " " +  Integer.toString(customerInfo.amountOfMJK) + " " + Double.toString(customerInfo.entryPrice) + " " + customerInfo.postalCode;
 		
 		Date date = new Date();
 		
