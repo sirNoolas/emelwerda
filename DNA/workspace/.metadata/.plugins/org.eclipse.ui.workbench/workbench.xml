@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="19" version="2.0">
+<workbench progressCount="20" version="2.0">
 <workbenchAdvisor/>
 <window height="768" maximized="true" width="1024" x="65" y="24">
 <fastViewData fastViewLocation="1024"/>
@@ -29,13 +29,23 @@
 <folder appearance="1" expanded="2">
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
+<part id="2"/>
+<part id="1"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CheckSupplies.java" partName="CheckSupplies.java" path="/home/david/workspace/CHCKassa/src/kassaV2/CheckSupplies.java" title="CheckSupplies.java" tooltip="CHCKassa/src/kassaV2/CheckSupplies.java" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CheckSupplies.java" partName="CheckSupplies.java" path="/home/david/workspace/CHCKassa/src/kassaV2/CheckSupplies.java" title="CheckSupplies.java" tooltip="CHCKassa/src/kassaV2/CheckSupplies.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/CHCKassa/src/kassaV2/CheckSupplies.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="113" selectionOffset="7800" selectionTopPixel="4386"/>
+<editorState selectionHorizontalPixel="0" selectionLength="405" selectionOffset="5774" selectionTopPixel="2965"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ItemKassa.java" partName="ItemKassa.java" path="/home/david/workspace/CHCKassa/src/kassaV2/ItemKassa.java" title="ItemKassa.java" tooltip="CHCKassa/src/kassaV2/ItemKassa.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/CHCKassa/src/kassaV2/ItemKassa.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="5720" selectionTopPixel="1833"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CustomerKassa.java" partName="CustomerKassa.java" path="/home/david/workspace/CHCKassa/src/kassaV2/CustomerKassa.java" title="CustomerKassa.java" tooltip="CHCKassa/src/kassaV2/CustomerKassa.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/CHCKassa/src/kassaV2/CustomerKassa.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1134" selectionTopPixel="3217"/>
 </editor>
 </editors>
 <views>
@@ -152,156 +162,160 @@
 <navigationHistory>
 <editors>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/CHCKassa/src/kassaV2/CheckSupplies.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/CHCKassa/src/kassaV2/ItemKassa.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/CHCKassa/src/kassaV2/CustomerKassa.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/CHCKassa/src/kassaV2/ListenForSpinner.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/CHCKassa/src/kassaV2/CustomerKassa.java"/>
 </editors>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="3797" y="0"/>
+<item historyLabel="CustomerKassa.java" index="2">
+<position info="not_deleted" x="6537" y="0"/>
 </item>
 <item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="4179" y="0"/>
+<position info="not_deleted" x="199" y="10"/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="6669" y="0"/>
 </item>
 <item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="4031" y="0"/>
+<position info="not_deleted" x="7748" y="480"/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="6929" y="0"/>
 </item>
 <item historyLabel="CheckSupplies.java" index="0">
-<position/>
+<position info="not_deleted" x="7748" y="480"/>
 </item>
 <item historyLabel="CheckSupplies.java" index="0">
-<position/>
+<position info="not_deleted" x="7658" y="0"/>
 </item>
 <item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="4152" y="0"/>
+<position info="not_deleted" x="950" y="0"/>
+</item>
+<item historyLabel="CustomerKassa.java" index="2">
+<position info="not_deleted" x="1134" y="0"/>
 </item>
 <item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="4076" y="0"/>
+<position info="not_deleted" x="950" y="0"/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="5348" y="0"/>
 </item>
 <item historyLabel="CheckSupplies.java" index="0">
-<position/>
+<position info="not_deleted" x="7108" y="266"/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="5281" y="0"/>
 </item>
 <item historyLabel="CheckSupplies.java" index="0">
-<position/>
+<position info="not_deleted" x="7108" y="266"/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="228" y="0"/>
 </item>
 <item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="4457" y="0"/>
+<position info="not_deleted" x="5774" y="405"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="4428" y="0"/>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="228" y="0"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="4632" y="0"/>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="4332" y="0"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="4597" y="0"/>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="2580" y="0"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="4752" y="0"/>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="2287" y="0"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="4773" y="0"/>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="2349" y="0"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position/>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="2364" y="0"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position/>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="2402" y="0"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="3830" y="0"/>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="503" y="0"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="4825" y="0"/>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="2402" y="0"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position/>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="392" y="0"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position/>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="3032" y="0"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position/>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="3070" y="0"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="4938" y="0"/>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="2831" y="0"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="4697" y="0"/>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="2881" y="0"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="4695" y="0"/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="5274" y="0"/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="5761" y="0"/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="7691" y="55"/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="4821" y="0"/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="5506" y="0"/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="1262" y="0"/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="6199" y="0"/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="5499" y="0"/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="4866" y="0"/>
-</item>
-<item historyLabel="CheckSupplies.java" index="0">
+<item historyLabel="ListenForSpinner.java" index="3">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="250" y="0"/>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="2881" y="0"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="245" y="5"/>
+<item historyLabel="CustomerKassa.java" index="4">
+<position info="not_deleted" x="1134" y="0"/>
 </item>
-<item historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="250" y="0"/>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="5216" y="0"/>
 </item>
-<item active="true" historyLabel="CheckSupplies.java" index="0">
-<position info="not_deleted" x="7800" y="113"/>
+<item historyLabel="CustomerKassa.java" index="4">
+<position info="not_deleted" x="1134" y="0"/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="5383" y="0"/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="5409" y="0"/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="5427" y="0"/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="5672" y="0"/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="5672" y="0"/>
+</item>
+<item historyLabel="CustomerKassa.java" index="4">
+<position info="not_deleted" x="1134" y="0"/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="5672" y="0"/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="5367" y="0"/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="5429" y="0"/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="5211" y="0"/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="5336" y="0"/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="2441" y="0"/>
+</item>
+<item historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="2164" y="0"/>
+</item>
+<item active="true" historyLabel="ItemKassa.java" index="1">
+<position info="not_deleted" x="2213" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -320,6 +334,15 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ListenForSpinner.java" tooltip="CHCKassa/src/kassaV2/ListenForSpinner.java">
+<persistable path="/CHCKassa/src/kassaV2/ListenForSpinner.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CustomerKassa.java" tooltip="CHCKassa/src/kassaV2/CustomerKassa.java">
+<persistable path="/CHCKassa/src/kassaV2/CustomerKassa.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ItemKassa.java" tooltip="CHCKassa/src/kassaV2/ItemKassa.java">
+<persistable path="/CHCKassa/src/kassaV2/ItemKassa.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CheckSupplies.java" tooltip="CHCKassa/src/kassaV2/CheckSupplies.java">
 <persistable path="/CHCKassa/src/kassaV2/CheckSupplies.java"/>
 </file>

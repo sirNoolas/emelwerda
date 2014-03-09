@@ -10,6 +10,7 @@ import java.awt.event.*;
 import java.io.*;
 
 public class CheckSupplies extends JFrame {
+	static String catalogus = "CATALOGUS.CHCFile";
 
 	JButton cancelButton, newItemButton, editItemButton, deleteItemButton;
 	JList listOfNamesOfItems;
@@ -135,7 +136,7 @@ public class CheckSupplies extends JFrame {
 			} // end of if
 
 			if(e.getSource() == newItemButton){	
-				PrintWriter itemOutput = createFile("CATALOGUS.CHCFile");
+				PrintWriter itemOutput = createFile(catalogus);
 				//write to the file
 				int i = 0;
 
@@ -161,7 +162,7 @@ public class CheckSupplies extends JFrame {
 			} // end of newItemButton
 
 			else if(e.getSource() == deleteItemButton){
-				PrintWriter itemOutput = createFile("CATALOGUS.CHCFile");
+				PrintWriter itemOutput = createFile(catalogus);
 				try{
 					Integer.parseInt(indexField.getText());
 
@@ -187,7 +188,7 @@ public class CheckSupplies extends JFrame {
 			} // end of deleteItemButton
 
 			else if(e.getSource() == editItemButton){
-				PrintWriter itemOutput = createFile("CATALOGUS.CHCFile");
+				PrintWriter itemOutput = createFile(catalogus);
 				//write to the file
 				int i = 0;
 
@@ -263,7 +264,7 @@ public class CheckSupplies extends JFrame {
 
 	private static Item[] getItemInfo(){
 
-		File catalog = new File("CATALOGUS.CHCFile");
+		File catalog = new File(catalogus);
 
 		try{
 			BufferedReader getInfo = new BufferedReader(

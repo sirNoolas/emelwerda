@@ -17,6 +17,8 @@ import java.util.Date;
 
 @SuppressWarnings("serial")
 public class CustomerKassa extends JFrame{
+	static String customerLog = "customerLog.CHCFile";
+	
 	// initialise variables for the window and calculations
 	JButton sendButton, cancelButton;
 	JLabel label1, label2, label3, label4;
@@ -248,11 +250,7 @@ public class CustomerKassa extends JFrame{
 	public void writeStart(){
 		Customer customerInfo = getCustomer();	
 		
-		PrintWriter custOutput = createFile("", "customerHistory.CHCFile");
-		//
-		// TODO: make sure the file CHCSystems gets created in the installer/startup program
-		// TODO: change the file path to the direct C drive
-		//
+		PrintWriter custOutput = createFile(customerLog);
 		createCustomer(customerInfo, custOutput);
 	
 	} // end of writeStart
@@ -282,10 +280,7 @@ public class CustomerKassa extends JFrame{
 		
 	}
 	
-	private static PrintWriter createFile(String dirName, String fileName){
-		
-		File customerHistoryDir = new File(dirName);
-		customerHistoryDir.mkdir();
+	private static PrintWriter createFile(String fileName){
 		
 		File customerHistory = new File(fileName);
 		

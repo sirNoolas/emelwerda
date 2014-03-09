@@ -5,7 +5,6 @@ package kassaV2;
  */
 
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 
 import java.awt.event.*;
 import java.io.*;
@@ -18,9 +17,10 @@ public class CheckSupplies extends JFrame {
 	JScrollPane scroller;
 	JPanel thePanel, buttonPanel, textFieldPanel;
 	JTextField itemField, indexField, priceField, supplyField;
-	
+
 	static Item[] sellableItems;
-	
+	static Item tempNewItem;
+
 	public static void main(String[] args) {
 
 		new CheckSupplies();
@@ -31,7 +31,7 @@ public class CheckSupplies extends JFrame {
 	public CheckSupplies(){
 		// read all item data from the file                
 		sellableItems = getItemInfo();
-		
+
 		this.setSize(800, 650);
 		this.setResizable(true);
 		this.setLocationRelativeTo(null);
@@ -39,117 +39,181 @@ public class CheckSupplies extends JFrame {
 		this.setTitle("CHCSystems - Vooraden");
 
 		thePanel = new JPanel();  
-		
+
 		// init Names of Items array		
 		for(int i = 0; i < sellableItems.length; i++){
 			if(sellableItems[i].itemName.startsWith(" ")){
 				namesOfItems.addElement(sellableItems[i].itemName + ":");
 			}else{
 				if(sellableItems[i].availableAmount == 999){
-					namesOfItems.addElement((i + 1) + (": ") + sellableItems[i].itemName + "; Prijs: €" + sellableItems[i].itemPrice + "; Vooraad: (Bijna) ONEINDIG" );
+					namesOfItems.addElement((i) + ": " + sellableItems[i].itemName + "; Prijs: €" + sellableItems[i].itemPrice + "; Vooraad: (Bijna) ONEINDIG" );
 				}else{
-					namesOfItems.addElement((i + 1) + (": ") + sellableItems[i].itemName + "; Prijs: €" + sellableItems[i].itemPrice + "; Vooraad (stuks): " + sellableItems[i].availableAmount);
+					namesOfItems.addElement((i) + (": ") + sellableItems[i].itemName + "; Prijs: €" + sellableItems[i].itemPrice + "; Vooraad (stuks): " + sellableItems[i].availableAmount);
 				}
-				
+
 			}
-			
+
 		} // end of for
-		
+
 		listOfNamesOfItems = new JList(namesOfItems);
 		listOfNamesOfItems.setVisibleRowCount(20);
-		
+
 		scroller = new JScrollPane(listOfNamesOfItems,
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		
+
 		listOfNamesOfItems.setFixedCellHeight(25);
 		listOfNamesOfItems.setFixedCellWidth(750);
-		
+
 		thePanel.add(scroller);
-		
+
 		//add textfields
 		textFieldPanel = new JPanel();
-		
+
 		indexField = new JTextField("Index", 4);
+		indexField.selectAll();
 		textFieldPanel.add(indexField);
-		
+
 		itemField = new JTextField("Item naam", 40);
+		itemField.selectAll();
 		textFieldPanel.add(itemField);
-		
+
 		priceField = new JTextField("Prijs", 5);
+		priceField.selectAll();
 		textFieldPanel.add(priceField);
-		
+
 		supplyField = new JTextField("Vooraad", 5);
+		supplyField.selectAll();
 		textFieldPanel.add(supplyField);
-		
+
 		thePanel.add(textFieldPanel);
-		
+
 		// init buttons
 		buttonPanel = new JPanel();
-		
+
 		newItemButton = new JButton("Nieuw item toevoegen");
 		ListenForButton lForInfoGetButton = new ListenForButton();
 		newItemButton.addActionListener(lForInfoGetButton);
 		newItemButton.setToolTipText("Een nieuw item op de gespecificeerde index toevoegen");
 		buttonPanel.add(newItemButton);
-		
+
 		editItemButton = new JButton("Een item aanpassen");
 		ListenForButton lForEditButton = new ListenForButton();
 		editItemButton.addActionListener(lForEditButton);
 		editItemButton.setToolTipText("De details van het item op de gespecificeerde index aanpassen. Overschrijft alle data! (alles invullen dus!)");
 		buttonPanel.add(editItemButton);
-		
+
 		deleteItemButton = new JButton("Een item verwijderen");
 		ListenForButton lForDeleteButton = new ListenForButton();
 		deleteItemButton.addActionListener(lForDeleteButton);
 		deleteItemButton.setToolTipText("item op gespecificeerde index verwijderen. Negeert alle andere velden");
 		buttonPanel.add(deleteItemButton);
-		
+
 		cancelButton = new JButton("Afsluiten");
 		ListenForButton lForCancelButton = new ListenForButton();		
 		cancelButton.addActionListener(lForCancelButton);
-		cancelButton.requestFocus();
 		buttonPanel.add(cancelButton);
-		
+
 		thePanel.add(buttonPanel);
-		
+
 		this.add(thePanel);
 		this.setVisible(true);
 	}
-	
+
 	private class ListenForButton implements ActionListener{
-		
+
 		public void actionPerformed(ActionEvent e){
-			Item tempNewItem;
-			
-			if(e.getSource() != cancelButton){
-				
+
+			if(e.getSource() != cancelButton && e.getSource() != deleteItemButton){
+
 				try{
-				tempNewItem = new Item(itemField.getText(), Double.parseDouble(priceField.getText()), Integer.parseInt(supplyField.getText()));
+					tempNewItem = new Item(itemField.getText(), Double.parseDouble(priceField.getText()), Integer.parseInt(supplyField.getText()));
 				}catch(NumberFormatException b){
 					JOptionPane.showMessageDialog(null, "Vul alstublieft goede data in!", "Input error!", JOptionPane.ERROR_MESSAGE);
 				} // end of try/catch
-				
+
 			} // end of if
-			
+
 			if(e.getSource() == newItemButton){	
-				namesOfItems.insertElementAt(itemField.getText() + " - " + priceField.getText() + " - " + supplyField.getText(), indexField.getText());
-				
-				//write to the file
 				PrintWriter itemOutput = createFile("CATALOGUS.CHCFile");
+				//write to the file
+				int i = 0;
+
 				for(Item thing : sellableItems){
-					createItems(thing, itemOutput);
+					if(i == Integer.parseInt(indexField.getText())){
+						try{
+							createItems(tempNewItem, itemOutput);
+							createItems(thing, itemOutput);
+						}catch(NullPointerException b){}
+					}else{
+						createItems(thing, itemOutput);
+					}
+					i++;
+				} // end of for
+
+				if(Integer.parseInt(indexField.getText()) > i - 1){
+					createItems(tempNewItem, itemOutput);
 				}
+
 				itemOutput.close();
-				
-			}else if(e.getSource() == cancelButton){
+				System.exit(0);
+
+			} // end of newItemButton
+
+			else if(e.getSource() == deleteItemButton){
+				PrintWriter itemOutput = createFile("CATALOGUS.CHCFile");
+				try{
+					Integer.parseInt(indexField.getText());
+
+					if(JOptionPane.showConfirmDialog(null, "Weet u zeker dat u dit item wilt verwijderen?", "Pas op!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0){
+						// write to the file
+						int i = 0;
+						for(Item thing : sellableItems){
+							if(i != Integer.parseInt(indexField.getText())){
+								createItems(thing, itemOutput);
+							}
+							i++;
+
+						}// end of for
+
+						itemOutput.close();
+						System.exit(0);
+
+					} // end of if
+
+				}catch(NumberFormatException b){
+					JOptionPane.showMessageDialog(null, "Vul alstublieft goede data in!", "Input error!", JOptionPane.ERROR_MESSAGE);
+				} // end of try/catch
+			} // end of deleteItemButton
+
+			else if(e.getSource() == editItemButton){
+				PrintWriter itemOutput = createFile("CATALOGUS.CHCFile");
+				//write to the file
+				int i = 0;
+
+				for(Item thing : sellableItems){
+					if(i == Integer.parseInt(indexField.getText())){
+						try{
+							createItems(tempNewItem, itemOutput);
+						}catch(NullPointerException b){}
+					}else{
+						createItems(thing, itemOutput);
+					}
+					i++;
+				} // end of for
+
+				itemOutput.close();
+				System.exit(0);
+			} // end of editItemButton
+
+			else if(e.getSource() == cancelButton){
 				System.exit(0);
 			}
-			
+
 		}
-		
+
 	} // end of class ListenForButton
-	
+
 
 	// File writing/reading code:
 	private static class Item{
@@ -167,7 +231,7 @@ public class CheckSupplies extends JFrame {
 		} // end of constructor Item
 
 	} // end of class Item
-	
+
 
 	private static PrintWriter createFile(String fileName){
 		File catalog = new File(fileName);
@@ -186,7 +250,7 @@ public class CheckSupplies extends JFrame {
 		return null;
 
 	} // end of function PrintWriter 
-	
+
 
 	private static void createItems(Item thing, PrintWriter itemOutput){
 
@@ -195,7 +259,7 @@ public class CheckSupplies extends JFrame {
 		itemOutput.println(itemInfo);
 
 	} // end of function createItems
-	
+
 
 	private static Item[] getItemInfo(){
 
@@ -209,7 +273,7 @@ public class CheckSupplies extends JFrame {
 
 			Item[] tempSellableItems = new Item[expectedLines];
 			Item[] sellableItems = null;
-			
+
 			String[] itemInfo = getInfo.readLine().split(" - ");
 			String tempItemInfo = "";
 
