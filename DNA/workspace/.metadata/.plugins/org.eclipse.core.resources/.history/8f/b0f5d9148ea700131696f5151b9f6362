@@ -1,0 +1,325 @@
+package kassaV2;
+
+/**
+ *@author SirNoolas - David Vonk
+ */
+
+import javax.swing.*;
+import javax.swing.text.JTextComponent;
+
+import java.awt.event.*;
+import java.io.*;
+
+public class CheckSupplies extends JFrame {
+
+	JButton cancelButton, newItemButton, editItemButton, deleteItemButton;
+	JList listOfNamesOfItems;
+	DefaultListModel namesOfItems = new DefaultListModel();
+	JScrollPane scroller;
+	JPanel thePanel, buttonPanel, textFieldPanel;
+	JTextField itemField, indexField, priceField, supplyField;
+
+	static Item[] sellableItems;
+	static Item tempNewItem;
+
+	public static void main(String[] args) {
+
+		new CheckSupplies();
+
+	} // end of main
+
+
+	public CheckSupplies(){
+		// read all item data from the file                
+		sellableItems = getItemInfo();
+
+		this.setSize(800, 650);
+		this.setResizable(true);
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setTitle("CHCSystems - Vooraden");
+
+		thePanel = new JPanel();  
+
+		// init Names of Items array		
+		for(int i = 0; i < sellableItems.length; i++){
+			if(sellableItems[i].itemName.startsWith(" ")){
+				namesOfItems.addElement(sellableItems[i].itemName + ":");
+			}else{
+				if(sellableItems[i].availableAmount == 999){
+					namesOfItems.addElement((i + 1) + (": ") + sellableItems[i].itemName + "; Prijs: €" + sellableItems[i].itemPrice + "; Vooraad: (Bijna) ONEINDIG" );
+				}else{
+					namesOfItems.addElement((i + 1) + (": ") + sellableItems[i].itemName + "; Prijs: €" + sellableItems[i].itemPrice + "; Vooraad (stuks): " + sellableItems[i].availableAmount);
+				}
+
+			}
+
+		} // end of for
+
+		listOfNamesOfItems = new JList(namesOfItems);
+		listOfNamesOfItems.setVisibleRowCount(20);
+
+		scroller = new JScrollPane(listOfNamesOfItems,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+		listOfNamesOfItems.setFixedCellHeight(25);
+		listOfNamesOfItems.setFixedCellWidth(750);
+
+		thePanel.add(scroller);
+
+		//add textfields
+		textFieldPanel = new JPanel();
+
+		indexField = new JTextField("Index", 4);
+		indexField.selectAll();
+		textFieldPanel.add(indexField);
+
+		itemField = new JTextField("Item naam", 40);
+		itemField.selectAll();
+		textFieldPanel.add(itemField);
+
+		priceField = new JTextField("Prijs", 5);
+		priceField.selectAll();
+		textFieldPanel.add(priceField);
+
+		supplyField = new JTextField("Vooraad", 5);
+		supplyField.selectAll();
+		textFieldPanel.add(supplyField);
+
+		thePanel.add(textFieldPanel);
+
+		// init buttons
+		buttonPanel = new JPanel();
+
+		newItemButton = new JButton("Nieuw item toevoegen");
+		ListenForButton lForInfoGetButton = new ListenForButton();
+		newItemButton.addActionListener(lForInfoGetButton);
+		newItemButton.setToolTipText("Een nieuw item op de gespecificeerde index toevoegen");
+		buttonPanel.add(newItemButton);
+
+		editItemButton = new JButton("Een item aanpassen");
+		ListenForButton lForEditButton = new ListenForButton();
+		editItemButton.addActionListener(lForEditButton);
+		editItemButton.setToolTipText("De details van het item op de gespecificeerde index aanpassen. Overschrijft alle data! (alles invullen dus!)");
+		buttonPanel.add(editItemButton);
+
+		deleteItemButton = new JButton("Een item verwijderen");
+		ListenForButton lForDeleteButton = new ListenForButton();
+		deleteItemButton.addActionListener(lForDeleteButton);
+		deleteItemButton.setToolTipText("item op gespecificeerde index verwijderen. Negeert alle andere velden");
+		buttonPanel.add(deleteItemButton);
+
+		cancelButton = new JButton("Afsluiten");
+		ListenForButton lForCancelButton = new ListenForButton();		
+		cancelButton.addActionListener(lForCancelButton);
+		buttonPanel.add(cancelButton);
+
+		thePanel.add(buttonPanel);
+
+		this.add(thePanel);
+		this.setVisible(true);
+	}
+
+	private class ListenForButton implements ActionListener{
+
+		public void actionPerformed(ActionEvent e){
+
+			if(e.getSource() != cancelButton && e.getSource() != deleteItemButton){
+
+				try{
+					tempNewItem = new Item(itemField.getText(), Double.parseDouble(priceField.getText()), Integer.parseInt(supplyField.getText()));
+				}catch(NumberFormatException b){
+					JOptionPane.showMessageDialog(null, "Vul alstublieft goede data in!", "Input error!", JOptionPane.ERROR_MESSAGE);
+				} // end of try/catch
+
+			} // end of if
+
+			if(e.getSource() == newItemButton){	
+				//write to the file
+				int i = 0;
+				PrintWriter itemOutput = createFile("CATALOGUS.CHCFile");
+
+				for(Item thing : sellableItems){
+					if(i == Integer.parseInt(indexField.getText())){
+						try{
+							createItems(tempNewItem, itemOutput);
+							createItems(thing, itemOutput);
+						}catch(NullPointerException b){}
+					}else{
+						createItems(thing, itemOutput);
+					}
+					i++;
+				} // end of for
+
+				if(Integer.parseInt(indexField.getText()) > i){
+					createItems(tempNewItem, itemOutput);
+				}
+
+				itemOutput.close();
+				if(JOptionPane.showConfirmDialog(null, "Item succesvol toegevoegd. Wilt u het programma afsluiten zodat u kunt herladen?", "Item succesvol toegevoegd", JOptionPane.YES_NO_OPTION) == 0){
+					System.exit(0);
+				}
+
+			} // end of newItemButton
+
+			else if(e.getSource() == deleteItemButton){
+				try{
+					Integer.parseInt(indexField.getText());
+
+					PrintWriter itemOutput = createFile("CATALOGUS.CHCFile");
+
+					if(JOptionPane.showConfirmDialog(null, "Weet u zeker dat u dit item wilt verwijderen?", "Pas op!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0){
+						// write to the file
+						int i = 0;
+						for(Item thing : sellableItems){
+							if(i != Integer.parseInt(indexField.getText())){
+								createItems(thing, itemOutput);
+							}
+
+						}// end of for
+						
+						itemOutput.close();
+						
+						// ask for exit
+						if(JOptionPane.showConfirmDialog(null, "Item succesvol verwijderd. Wilt u het programma afsluiten zodat u kunt herladen?", "Item succesvol verwijderd", JOptionPane.YES_NO_OPTION) == 0){
+							System.exit(0);
+						}
+						
+					} // end of if
+
+				}catch(NumberFormatException b){
+					JOptionPane.showMessageDialog(null, "Vul alstublieft goede data in!", "Input error!", JOptionPane.ERROR_MESSAGE);
+				} // end of try/catch
+
+			} // end of deleteItemButton
+
+			else if(e.getSource() == editItemButton){
+				//TODO: fix bug
+				//write to the file
+				int i = 0;
+				PrintWriter itemOutput = createFile("CATALOGUS.CHCFile");
+
+				for(Item thing : sellableItems){
+					if(i == Integer.parseInt(indexField.getText())){
+						try{
+							createItems(tempNewItem, itemOutput);
+						}catch(NullPointerException b){}
+					}else{
+						createItems(thing, itemOutput);
+					}
+					i++;
+				} // end of for
+
+			} // end of editItemButton
+
+			else if(e.getSource() == cancelButton){
+				System.exit(0);
+			}
+
+		}
+
+	} // end of class ListenForButton
+
+
+	// File writing/reading code:
+	private static class Item{
+
+		public String itemName;
+		public double itemPrice;
+		public int availableAmount;
+
+		public Item(String itemName, double itemPrice, int availableAmount){
+
+			this.itemName = itemName;
+			this.itemPrice = itemPrice;
+			this.availableAmount = availableAmount;
+
+		} // end of constructor Item
+
+	} // end of class Item
+
+
+	private static PrintWriter createFile(String fileName){
+		File catalog = new File(fileName);
+		try{
+			PrintWriter infoToWrite = new PrintWriter(
+					new BufferedWriter(
+							new FileWriter(catalog, false)));
+
+			return infoToWrite;
+
+		}catch(IOException e){
+			System.out.println("An I/O Error Occured");
+			System.exit(0);
+		} // end of try/catch
+
+		return null;
+
+	} // end of function PrintWriter 
+
+
+	private static void createItems(Item thing, PrintWriter itemOutput){
+
+		String itemInfo = thing.itemName + " - " + Double.toString(thing.itemPrice) + " - " + Integer.toString(thing.availableAmount);
+
+		itemOutput.println(itemInfo);
+
+	} // end of function createItems
+
+
+	private static Item[] getItemInfo(){
+
+		File catalog = new File("CATALOGUS.CHCFile");
+
+		try{
+			BufferedReader getInfo = new BufferedReader(
+					new FileReader(catalog));
+
+			int expectedLines = 100;
+
+			Item[] tempSellableItems = new Item[expectedLines];
+			Item[] sellableItems = null;
+
+			String[] itemInfo = getInfo.readLine().split(" - ");
+			String tempItemInfo = "";
+
+			for(int i = 0; i < expectedLines && itemInfo != null; i++){
+				tempSellableItems[i] = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]), Integer.parseInt(itemInfo[2]));
+				tempItemInfo = getInfo.readLine();
+				if(tempItemInfo != null){
+					itemInfo = tempItemInfo.split(" - ");
+				}else if(tempSellableItems[i + 1] == null){
+					sellableItems = new Item[i+1];
+					for(int x = 0; x <= i; x++){
+						sellableItems[x] = tempSellableItems[x];
+					}
+					break;
+				}
+			}
+
+			getInfo.close();
+
+			return sellableItems;
+
+		}catch(FileNotFoundException e){
+			System.out.println("Couldn't Find File");
+			System.exit(0);
+
+		}catch(IOException e){
+			System.out.println("An I/O Error Occured");
+			System.exit(0);
+		} // end of try/catch
+
+		return null;
+	} // end of class getItemInfo
+
+} // end of checkSupplies
+
+
+
+
+
+
+
+

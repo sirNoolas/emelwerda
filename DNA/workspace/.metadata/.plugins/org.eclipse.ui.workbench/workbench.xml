@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workbench progressCount="19" version="2.0">
+<workbenchAdvisor/>
+<window height="768" maximized="true" width="1024" x="65" y="24">
+<fastViewData fastViewLocation="1024"/>
+<perspectiveBar>
+<itemSize x="160"/>
+</perspectiveBar>
+<coolbarLayout>
+<coolItem id="group.file" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="144" y="30"/>
+<coolItem id="additions" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.debug.ui.launch.toolbar" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="156" y="30"/>
+<coolItem id="org.eclipse.debug.ui.main.toolbar" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="88" y="30"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="124" y="30"/>
+<coolItem id="group.nav" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="232" y="30"/>
+<coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="group.help" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
+</coolbarLayout>
+<page aggregateWorkingSetId="Aggregate for window 1392574542778" focus="true" label="Workspace - Resource">
+<editors>
+<editorArea activeWorkbook="DefaultEditorWorkbook">
+<info part="DefaultEditorWorkbook">
+<folder appearance="1" expanded="2">
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+</editorArea>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CheckSupplies.java" partName="CheckSupplies.java" path="/home/david/workspace/CHCKassa/src/kassaV2/CheckSupplies.java" title="CheckSupplies.java" tooltip="CHCKassa/src/kassaV2/CheckSupplies.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/CHCKassa/src/kassaV2/CheckSupplies.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="113" selectionOffset="7800" selectionTopPixel="4386"/>
+</editor>
+</editors>
+<views>
+<view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
+<viewState CommonNavigator.LINKING_ENABLED="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0"/>
+</view>
+<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
+<viewState/>
+</view>
+<view id="org.eclipse.ui.views.TaskList" partName="Tasks">
+<viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.completionField" categoryGroup="none" markerContentGenerator="org.eclipse.ui.ide.tasksGenerator" partName="Tasks">
+<columnWidths org.eclipse.ui.ide.completionField="40" org.eclipse.ui.ide.descriptionField="350" org.eclipse.ui.ide.locationField="105" org.eclipse.ui.ide.markerType="801" org.eclipse.ui.ide.pathField="140" org.eclipse.ui.ide.priorityField="35" org.eclipse.ui.ide.resourceField="105"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.completionField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.priorityField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.descriptionField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.pathField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.locationField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.markerType"/>
+</viewState>
+</view>
+<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
+<viewState/>
+</view>
+</views>
+<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.ui.resourcePerspective">
+<perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
+<descriptor class="org.eclipse.ui.internal.ide.application.ResourcePerspective" id="org.eclipse.ui.resourcePerspective" label="Resource"/>
+<alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.search.searchActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.annotationNavigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.navigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.convertLineDelimitersTo"/>
+<alwaysOnActionSet id="org.eclipse.ui.externaltools.ExternalToolsSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.keyBindings"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.openFiles"/>
+<alwaysOnActionSet id="org.eclipse.ui.NavigateActionSet"/>
+<show_view_action id="org.eclipse.ui.navigator.ProjectExplorer"/>
+<show_view_action id="org.eclipse.ui.views.BookmarkView"/>
+<show_view_action id="org.eclipse.ui.views.ContentOutline"/>
+<show_view_action id="org.eclipse.ui.views.PropertySheet"/>
+<show_view_action id="org.eclipse.ui.views.ProblemView"/>
+<show_view_action id="org.eclipse.ui.views.ProgressView"/>
+<show_view_action id="org.eclipse.ui.views.TaskList"/>
+<new_wizard_action id="org.eclipse.ui.wizards.new.folder"/>
+<new_wizard_action id="org.eclipse.ui.wizards.new.file"/>
+<new_wizard_action id="org.eclipse.ui.editors.wizards.UntitledTextFileWizard"/>
+<perspective_action id="org.eclipse.team.cvs.ui.cvsPerspective"/>
+<perspective_action id="org.eclipse.team.ui.TeamSynchronizingPerspective"/>
+<hide_toolbar_item_id id="org.eclipse.debug.ui.commands.RunToLine"/>
+<hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
+<view id="org.eclipse.ui.navigator.ProjectExplorer"/>
+<view id="org.eclipse.ui.views.ContentOutline"/>
+<view id="org.eclipse.ui.console.ConsoleView"/>
+<view id="org.eclipse.ui.views.TaskList"/>
+<fastViewBars/>
+<layout>
+<mainWindow>
+<info folder="true" part="topLeft">
+<folder activePageID="org.eclipse.ui.navigator.ProjectExplorer" appearance="2" expanded="2">
+<page content="org.eclipse.ui.navigator.ProjectExplorer" label="Project Explorer"/>
+<page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
+<page content="org.eclipse.team.ccvs.ui.RepositoriesView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@50d20453" ratio="0.7495049" ratioLeft="757" ratioRight="253" relationship="2" relative="topLeft">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+</folder>
+</info>
+<info part="org.eclipse.ui.editorss" ratio="0.25940594" ratioLeft="262" ratioRight="748" relationship="2" relative="topLeft"/>
+<info folder="true" part="bottomRight" ratio="0.6599064" ratioLeft="423" ratioRight="218" relationship="4" relative="org.eclipse.ui.editorss">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.team.ui.GenericHistoryView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@3dca4bf3" ratio="0.49968454" ratioLeft="792" ratioRight="793" relationship="2" relative="org.eclipse.ui.editorss">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.jdt.debug.ui.DisplayView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+</folder>
+</info>
+<info folder="true" part="bottomLeft" ratio="0.49921995" ratioLeft="320" ratioRight="321" relationship="4" relative="topLeft">
+<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+</mainWindow>
+<detachedWindow height="1000" width="640" x="1920" y="24">
+<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+</presentation>
+</folder>
+</detachedWindow>
+</layout>
+</perspective>
+</perspectives>
+<workingSets/>
+<navigationHistory>
+<editors>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/CHCKassa/src/kassaV2/CheckSupplies.java"/>
+</editors>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="3797" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="4179" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="4031" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="4152" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="4076" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="4457" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="4428" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="4632" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="4597" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="4752" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="4773" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="3830" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="4825" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="4938" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="4697" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="4695" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="5274" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="5761" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="7691" y="55"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="4821" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="5506" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="1262" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="6199" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="5499" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="4866" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="250" y="0"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="245" y="5"/>
+</item>
+<item historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="250" y="0"/>
+</item>
+<item active="true" historyLabel="CheckSupplies.java" index="0">
+<position info="not_deleted" x="7800" y="113"/>
+</item>
+</navigationHistory>
+<input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
+</page>
+<workbenchWindowAdvisor/>
+<actionBarAdvisor/>
+<trimLayout>
+<trimArea IMemento.internal.id="128">
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
+</trimArea>
+<trimArea IMemento.internal.id="1024">
+<trimItem IMemento.internal.id="org.eclise.ui.internal.FastViewBar"/>
+<trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
+</trimArea>
+</trimLayout>
+</window>
+<mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CheckSupplies.java" tooltip="CHCKassa/src/kassaV2/CheckSupplies.java">
+<persistable path="/CHCKassa/src/kassaV2/CheckSupplies.java"/>
+</file>
+</mruList>
+</workbench>

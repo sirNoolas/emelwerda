@@ -1,0 +1,330 @@
+package kassaV2;
+
+/**
+ *@author SirNoolas - David Vonk
+ */
+
+import javax.swing.*;
+
+import java.awt.event.*;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import java.io.*;
+import java.util.Date;
+
+
+@SuppressWarnings("serial")
+public class CustomerKassa extends JFrame{
+	// initialise variables for the window and calculations
+	JButton sendButton, cancelButton;
+	JLabel label1, label2, label3, label4;
+	JSlider howManyChildren, howManyAdults, howManyMJK;
+	JCheckBox adultMJKOn1;
+	JRadioButton adultSponsor, regAdult; // PAY ATENTION!!! SPONSOR == DONATOR...
+	JTextField getPostalCode;
+
+	static int adults;
+	static int children;
+	static int amountOfMJK;
+	static double totalCalc;
+	static String postalCode;
+	double ADULTPRICE = 4.00; // Price in euro's
+	double CHILDPRICE = 2.00; // Price in euro's
+	double MJKPRICE = 3.00; // price in euro's
+
+	public static void main(String[] args) {
+
+			new CustomerKassa();
+		
+	} // end of main
+
+	public CustomerKassa(){
+		int maxSliderSize = 10;
+		
+		this.setSize(275, 375);
+		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setTitle("CHCSystems - Klanten Registratie");
+
+		JPanel thePanel = new JPanel();
+
+		
+		// initialising the number of customers panels
+		// panel1
+		JPanel panel1 = new JPanel();
+
+		label1 = new JLabel("Aantal volwassenen: 0");
+		panel1.add(label1);
+
+		thePanel.add(panel1);
+		
+		// initialising slider
+		howManyAdults = new JSlider(0, maxSliderSize, 0);
+		howManyAdults.setMinorTickSpacing(1);
+		howManyAdults.setMajorTickSpacing(5);
+		howManyAdults.setPaintTicks(true);
+		howManyAdults.setPaintLabels(true);
+
+		ListenForSlider lForSliderAdults = new ListenForSlider();
+		howManyAdults.addChangeListener(lForSliderAdults);
+
+		thePanel.add(howManyAdults);
+
+		// radiobuttons for sponsor, MJK, etc.
+		JPanel panel4 = new JPanel();
+		
+		label4 = new JLabel("Specificaties:");
+		panel4.add(label4);
+		
+		adultSponsor = new JRadioButton("sponsor");
+		regAdult = new JRadioButton("normaal");
+
+		ButtonGroup adultSpec = new ButtonGroup();
+
+		adultSpec.add(adultSponsor);
+		adultSpec.add(regAdult);
+
+		panel4.add(regAdult);
+		panel4.add(adultSponsor);
+
+		regAdult.setSelected(true);
+		
+		thePanel.add(panel4);
+
+		
+		// panel2
+		JPanel panel2 = new JPanel();
+
+		label2 = new JLabel("Aantal kinderen: 0");
+		panel2.add(label2);
+		
+		thePanel.add(panel2);
+		
+		// initialising slider
+		howManyChildren = new JSlider(0, maxSliderSize, 0);
+		howManyChildren.setMinorTickSpacing(1);
+		howManyChildren.setMajorTickSpacing(5);
+		howManyChildren.setPaintTicks(true);
+		howManyChildren.setPaintLabels(true);
+
+		ListenForSlider lForSliderChildren = new ListenForSlider();
+		howManyChildren.addChangeListener(lForSliderChildren);
+
+		thePanel.add(howManyChildren);
+		
+		// TODO: add a textfield which displays the value of the slider if it changes
+		// TODO: make sure the slider does also display the value of the textfield if it changes
+	
+		
+		// initialise panel3
+		// initialise amount of MJK
+		JPanel panel3 = new JPanel();
+		
+		
+		// initialise checkbox
+		adultMJKOn1 = new JCheckBox("Museumjaarkaart");
+		panel3.add(adultMJKOn1);
+		
+		label3 = new JLabel("Aantal: 0");
+		panel3.add(label3);
+		
+		thePanel.add(panel3);
+		
+		// initialising slider
+		howManyMJK = new JSlider(0, maxSliderSize, 0);
+		howManyMJK.setMinorTickSpacing(1);
+		howManyMJK.setMajorTickSpacing(5);
+		howManyMJK.setPaintTicks(true);
+		howManyMJK.setPaintLabels(true);
+		
+		ListenForSlider lForSliderSponsors = new ListenForSlider();
+		howManyMJK.addChangeListener(lForSliderSponsors);
+		
+		thePanel.add(howManyMJK);
+		// TODO: add a textfield which displays the value of the slider if it changes
+		// TODO: make sure the slider does also display the value of the textfield if it changes
+		
+		
+		// initialise textField
+		getPostalCode = new JTextField("postcode", 17);
+		thePanel.add(getPostalCode);
+		
+		// Initialise Button
+		sendButton = new JButton("Opslaan");
+		ListenForButton lForButton1 = new ListenForButton();
+		sendButton.addActionListener(lForButton1);
+		
+		thePanel.add(sendButton);
+
+		// Initialise Button
+		cancelButton = new JButton("Anuleren");
+		ListenForButton lForButton2 = new ListenForButton();
+		cancelButton.addActionListener(lForButton2);
+
+		thePanel.add(cancelButton);
+		
+		//make everything visible
+		this.add(thePanel);
+		this.setVisible(true);
+	} // end of CustomerKassa
+
+	private class ListenForButton implements ActionListener{
+
+		public void actionPerformed(ActionEvent e){
+			
+			if(e.getSource() == sendButton){
+				adults = howManyAdults.getValue();
+				children = howManyChildren.getValue();
+				postalCode = getPostalCode.getText();
+			
+				if(adultSponsor.isSelected()){
+					ADULTPRICE = 0;	CHILDPRICE = 0;
+					totalCalc = 0;
+					
+				}else{
+					if(adultMJKOn1.isSelected()){ 
+						amountOfMJK = howManyMJK.getValue();
+						totalCalc = getPrice(true);
+						
+					}else{
+						totalCalc = getPrice(false);
+					}
+					
+				}
+				if(isValidMove()){
+					writeStart();
+					JOptionPane.showMessageDialog(CustomerKassa.this, "De klant moet " + totalCalc + " betalen.");
+					System.exit(0);
+				}
+				
+			}else if(e.getSource() == cancelButton){
+				System.exit(0);
+			}			
+		} // end of actionPerformed
+		
+		private boolean isValidMove(){
+			if(totalCalc >= 0 && adults > 0 && adults >= amountOfMJK && !postalCode.equals("postcode")){
+				return true;
+			}else{
+				JOptionPane.showMessageDialog(CustomerKassa.this, "ERROR: Foutieve invoer");
+				return false;
+			}
+			
+			
+		}
+
+	} // end of ListenForButton
+	
+	private class ListenForSlider implements ChangeListener{
+		
+		public void stateChanged(ChangeEvent e){
+			
+			if(e.getSource() == howManyAdults){
+				label1.setText("Aantal volwassenen: " + howManyAdults.getValue());				
+			}else if(e.getSource() == howManyChildren){
+				label2.setText("Aantal kinderen: " + howManyChildren.getValue());	
+			}else if(e.getSource() == howManyMJK){
+				label3.setText("Aantal: " + howManyMJK.getValue());	
+			}
+			
+		} // end of actionPerformed
+		
+	} // end of ListenForSlider
+	
+	public double getPrice(boolean hasMJK){
+
+		if(hasMJK){
+			return ((amountOfMJK * MJKPRICE) + ((adults - amountOfMJK) * ADULTPRICE) + (children * CHILDPRICE));
+		}else{
+			return (adults * ADULTPRICE + children * CHILDPRICE);
+		}
+		
+	} // end of getPrice
+	
+	// writing to the file
+	public void writeStart(){
+		Customer customerInfo = getCustomer();	
+		
+		PrintWriter custOutput = createFile("~/CHCSystems", "~/CHCSystems/customerHistory.CHCFile");
+		//
+		// TODO: make sure the file CHCSystems gets created in the installer/startup program
+		// TODO: change the file path to the direct C drive
+		//
+		createCustomer(customerInfo, custOutput);
+	
+	} // end of writeStart
+	
+	private static class Customer{
+		
+		public String postalCode;
+		public double entryPrice;
+		public int amountOfAdults, amountOfChildren, amountOfMJK;
+		
+		public Customer(String postalCode, double entryPrice, int amountOfAdults, int amountOfChildren, int amountOfMJK){
+			this.postalCode = postalCode;
+			this.entryPrice = entryPrice;
+			this.amountOfAdults = amountOfAdults;
+			this.amountOfChildren = amountOfChildren;
+			this.amountOfMJK = amountOfMJK;	
+		
+		} // end of Customer
+		
+	} // end of Customer
+	
+	private static Customer getCustomer(){
+		
+		Customer customerInfo = new Customer(postalCode, totalCalc, adults, children, amountOfMJK);
+		
+		return customerInfo;
+		
+	}
+	
+	private static PrintWriter createFile(String dirName, String fileName){
+		
+		File customerHistoryDir = new File(dirName);
+		customerHistoryDir.mkdir();
+		
+		File customerHistory = new File(fileName);
+		
+		try{
+
+			PrintWriter infoToWrite = new PrintWriter(
+					new BufferedWriter(
+							new FileWriter(customerHistory, true)));
+			return infoToWrite;
+			
+		}catch(IOException e){
+			System.out.println("An I/O Error Ocurred");
+			System.exit(0);
+			
+		} // end of try/catch
+		
+		return null;
+				
+	} // end of PrintWriter
+	
+	private static void createCustomer(Customer customerInfo, PrintWriter custOutput){
+		
+		String stringCustomerInfo = Integer.toString(customerInfo.amountOfAdults) + " " + Integer.toString(customerInfo.amountOfChildren) + " " +  Integer.toString(customerInfo.amountOfMJK) + " " + Double.toString(customerInfo.entryPrice) + " " + customerInfo.postalCode;
+		
+		Date date = new Date();
+		
+		custOutput.println(date + " - " + stringCustomerInfo);
+		custOutput.close();
+		
+	}
+
+} // end of CustomerKassa
+
+
+
+
+
+
+
+
+
+

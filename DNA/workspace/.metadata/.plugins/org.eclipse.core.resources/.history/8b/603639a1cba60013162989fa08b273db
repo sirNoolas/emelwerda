@@ -1,0 +1,216 @@
+package kassaV2;
+
+/**
+ *@author SirNoolas - David Vonk
+ */
+
+import javax.swing.*;
+import javax.swing.text.JTextComponent;
+
+import java.awt.event.*;
+import java.io.*;
+
+public class CheckSupplies extends JFrame {
+
+	JButton cancelButton, getInfoButton;
+	JList listOfNamesOfItems;
+	DefaultListModel namesOfItems = new DefaultListModel();
+	JScrollPane scroller;
+	JPanel thePanel;
+	JTextArea infoOnComponent, infoOnComponentPrice, infoOnComponentAmountLeft;
+	
+	static Item[] sellableItems;
+	
+	public static void main(String[] args) {
+
+		// read from the file                
+		sellableItems = getItemInfo();
+
+		new CheckSupplies();
+		
+		// write to the file
+		PrintWriter itemOutput = createFile("CATALOGUS.CHCFile");
+		for(Item thing : sellableItems){
+			createItems(thing, itemOutput);
+		}
+		itemOutput.close();
+
+	} // end of main
+
+
+	public CheckSupplies(){
+		this.setSize(400, 190);
+		this.setResizable(true);
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setTitle("CHCSystems - Vooraden");
+
+		thePanel = new JPanel();  
+		
+		// init Names of Items array		
+		for(int i = 0; i < sellableItems.length; i++){
+			namesOfItems.addElement(sellableItems[i].itemName);
+		} // end of for
+		
+		listOfNamesOfItems = new JList(namesOfItems);
+		listOfNamesOfItems.setVisibleRowCount(5);
+		
+		scroller = new JScrollPane(listOfNamesOfItems,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		
+		listOfNamesOfItems.setFixedCellHeight(20);
+		listOfNamesOfItems.setFixedCellWidth(150);
+		
+		thePanel.add(scroller);
+		
+		// init textFields
+		infoOnComponent = new JTextArea(1, 15);
+		infoOnComponent.setLineWrap(true);
+		thePanel.add(infoOnComponent);
+		
+		infoOnComponentAmountLeft = new JTextArea(1, 6);
+		infoOnComponentAmountLeft.setLineWrap(true);
+		thePanel.add(infoOnComponentAmountLeft);
+		
+		infoOnComponentPrice = new JTextArea(1, 4);
+		infoOnComponentPrice.setLineWrap(true);
+		thePanel.add(infoOnComponentPrice);
+		
+		// init buttons
+		getInfoButton = new JButton("Informatie ophalen");
+		ListenForButton lForInfoGetButton = new ListenForButton();
+		getInfoButton.addActionListener(lForInfoGetButton);
+		thePanel.add(getInfoButton);
+		
+		cancelButton = new JButton("Anuleren");
+		ListenForButton lForCancelButton = new ListenForButton();		
+		cancelButton.addActionListener(lForCancelButton);
+		thePanel.add(cancelButton);
+		
+		this.add(thePanel);
+		this.setVisible(true);
+	}
+	
+	private class ListenForButton implements ActionListener{
+		
+		public void actionPerformed(ActionEvent e){
+			
+			if(e.getSource() == getInfoButton){
+				int tempSelect = listOfNamesOfItems.getSelectedIndex();
+				infoOnComponent.append("Omschrijving: " + sellableItems[tempSelect].itemDiscription);
+				infoOnComponentPrice.append("prijs: €" + sellableItems[tempSelect].itemPrice);
+				infoOnComponentAmountLeft.append("vooraad: " + sellableItems[tempSelect].availableAmount);
+						
+				
+				//TODO: devide this info up into multiple textfields....
+				
+			}else if(e.getSource() == cancelButton){
+				System.exit(0);
+			}
+			
+		}
+		
+	}
+	
+
+	// File writing/reading code:
+	private static class Item{
+
+		public String itemName, itemDiscription;
+		public double itemPrice;
+		public int availableAmount;
+
+		public Item(String itemName, String itemDiscription, double itemPrice, int availableAmount){
+
+			this.itemName = itemName;
+			this.itemDiscription = itemDiscription;
+			this.itemPrice = itemPrice;
+			this.availableAmount = availableAmount;
+
+		} // end of Item
+
+	} // end of Item
+
+	private static PrintWriter createFile(String fileName){
+		File catalog = new File(fileName);
+		try{
+			PrintWriter infoToWrite = new PrintWriter(
+					new BufferedWriter(
+							new FileWriter(catalog, false)));
+
+			return infoToWrite;
+
+		}catch(IOException e){
+			System.out.println("An I/O Error Occured");
+			System.exit(0);
+		} // end of try/catch
+
+		return null;
+
+	} // end of PrintWriter 
+
+	private static void createItems(Item thing, PrintWriter itemOutput){
+
+		String itemInfo = thing.itemName + " - " + thing.itemDiscription + " - " + Double.toString(thing.itemPrice) + " - " + Integer.toString(thing.availableAmount);
+
+		itemOutput.println(itemInfo);
+
+	}
+
+	private static Item[] getItemInfo(){
+
+		File catalog = new File("CATALOGUS.CHCFile");
+
+		try{
+			BufferedReader getInfo = new BufferedReader(
+					new FileReader(catalog));
+
+			int expectedLines = 10;
+
+			Item[] tempSellableItems = new Item[expectedLines];
+			Item[] sellableItems = null;
+			
+			String[] itemInfo = getInfo.readLine().split(" - ");
+			String tempItemInfo = "";
+
+			for(int i = 0; i < expectedLines && itemInfo != null; i++){
+
+				tempSellableItems[i] = new Item(itemInfo[0], itemInfo[1], Double.parseDouble(itemInfo[2]), Integer.parseInt(itemInfo[3]));
+				tempItemInfo = getInfo.readLine();
+				if(tempItemInfo != null){
+					itemInfo = tempItemInfo.split(" - ");
+				}else if(tempSellableItems[i + 1] == null){
+					sellableItems = new Item[i+1];
+					for(int x = 0; x <= i; x++){
+						sellableItems[x] = tempSellableItems[x];
+					}
+					break;
+				}
+			}
+
+			getInfo.close();
+
+			return sellableItems;
+
+		}catch(FileNotFoundException e){
+			System.out.println("Couldn't Find File");
+			System.exit(0);
+
+		}catch(IOException e){
+			System.out.println("An I/O Error Occured");
+			System.exit(0);
+		} // end of try/catch
+
+		return null;
+	}
+
+} // end of checkSupplies
+
+
+
+
+
+
+
+
